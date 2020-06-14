@@ -1,0 +1,175 @@
+<!--
+    <html>
+    <head>
+        <title>
+            Signup Form
+        </title>
+    </head>
+    <body>
+        <form method="POST">
+            {%csrf_token%}
+           <input type="text" name="username" placeholder="User Name"/>
+           <input type="password" name='password' placeholder="Password"/>
+           <input type="text" name='userIp' placeholder="Ip auto detected"/>
+           <input type="text" name ='userDepartment' placeholder="Department"/>
+           <input type="submit" name='Submit'>
+        </form>
+    </body>
+</html>
+-->
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>
+      Centaralised Attendence System
+    </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@900&family=Open+Sans:ital,wght@1,300;1,800&family=PT+Sans:ital,wght@1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/index.css">
+  </script>
+<script type="text/javascript">
+function getLocation() {
+if (navigator.geolocation) {
+  navigator.geolocation.watchPosition(showPosition);
+} else {
+  x.innerHTML = "Geolocation is not supported by this browser.";
+}
+}
+function showPosition(position) {
+  document.getElementById("latitude").value= position.coords.latitude;
+  document.getElementById("longitude").value=position.coords.longitude;
+}
+
+getLocation()
+  </script>
+  <script type="text/javascript">
+  window.onload = function () {
+           var script = document.createElement("script");
+           script.type = "text/javascript";
+           script.src = "https://api.ipify.org?format=jsonp&callback=DisplayIP";
+           document.getElementsByTagName("head")[0].appendChild(script);
+       };
+       function DisplayIP(response) {
+           document.getElementById("Ip").value = response.ip;
+           //document.getElementById("longitude").value = response.ip;
+       }
+  </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-light">
+      <center>
+        <a class="navbar-brand" href="">
+          <img src="https://image.flaticon.com/icons/svg/2534/2534714.svg" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+          Centralised Attendence System
+        </a>
+      </center>
+    </nav>
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-4">Register Your Self here..!!</h1>
+        <p class="lead">Please, Do register Your self down here.!</p>
+        <p class="lead"> Thank you.!!</p>        
+      </div>
+    </div>
+
+    <div class="container">
+      <h1 class= "display-5">Registration Form</h1>
+        {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+        <h1{% if message.tags %} class="{{ message.tags }}"{% endif %} style="color: red"></h1>
+        <div id="dialog" title="New message">
+                <p>{{message}}</p>
+        </div>
+        {% endfor %}
+    </ul>
+    {% endif %}
+      <hr>
+      <form method="post">
+          {%csrf_token%}
+        <div class="form-group row">
+      <label for="colFormLabelLg" class="col-sm-1 col-form-label col-form-label-lg">Username</label>
+      <div class="col-sm-10">
+        <input type="text" name="username" class="form-control form-control-lg" id="colFormLabelLg" placeholder="Username">
+      </div>
+    </div>
+    <hr>
+      <div class="form-inline">
+      <center>
+        <div class="form-group">
+          <label for="inputPassword6">Password</label>
+          <input type="password" name="password" id="inputPassword6" class="form-control mx-sm-2" aria-describedby="passwordHelpInline">
+          <small id="passwordHelpInline" class="text-muted">
+            Must be 8-20 characters long.
+          </small>
+        </div>
+      </center>
+        <div class="form-group">
+          <label for="inputPassword6">Confirm Password</label>
+          <input type="password" name="confirmPassword" id="inputPassword6" class="form-control mx-sm-2" aria-describedby="passwordHelpInline">
+          <small id="passwordHelpInline" class="text-muted">
+            Retype your password here.
+          </small>
+        </div>
+    </div>
+    <hr>
+    <div class="form-inline">
+      <div class="form-group">
+        <label for="IP">Internet Protocol</label>
+        <input type="Ip" name="userIp" id="Ip" class="form-control mx-sm-3" aria-describedby="IPHelpInline">
+        <small id="Ip" class="text-muted">
+          Autodetected
+        </small>
+      </div>
+    </div>
+<hr>
+    <div class="form-inline">
+      <div class="form-group">
+        <label for="latitude">Latitude</label>
+        <input type="lat" name="latitude" id="latitude" class="form-control mx-sm-3" aria-describedby="latHelpInline">
+        <small id="latitude" class="text-muted">
+          Autodetected
+        </small>
+      </div>
+      <hr>
+      <div class="form-group">
+        <label for="longitude">Longitude</label>
+        <input type="lon" name="longitude" id="longitude" class="form-control mx-sm-3" aria-describedby="lonHelpInline">
+        <small class="text-muted">
+          Autodetected
+        </small>
+      </div>
+    </div>
+  <hr>
+  <div class="form-group col-md-4">
+  <label for="inputState">Department</label>
+  <select id="inputState" name='userDepartment' class="form-control">
+    <option selected>COMPUTER DEPARTMENT</option>
+    <option>ACCOUNT DEPARTMENT</option>
+    <option>PRODUCTION DEPARTMENT</option>
+    <option>MARKETING DEPARTMENT</option>
+    <option>HR DEPARTMENT</option>
+  </select>
+</div>
+<hr>
+<button type="submit" name="Submit" class="btn btn-success">Success</button>
+</form>
+
+</div>
+  <hr>
+</div>
+
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <center>
+      <h5>Developed by <span class="badge badge-secondary">Emerging_Codes()</span></h5>
+      <p class="badge badge-light">Made with ❤️ in INDIA</p>
+    </center>
+    </div>
+</div>
+  </body>
+</html>

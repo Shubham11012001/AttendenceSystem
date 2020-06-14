@@ -1,0 +1,94 @@
+<!--
+   <html>
+    <head>
+        <title>
+            lets get started
+        </title>
+    </head>
+    <body>
+        <center>
+            <h1>
+                Welcome to the centrelized attendence system
+             </h1>
+             <a href="{%url 'register'%}">Register</a>
+             <br>
+             <a href="{%url 'login'%}">Login Here</a>
+        </center>
+        {%if context%}
+            <h1>
+                hi {{context.username}}
+            </h1>
+            <a href="{%url 'attendence'%}">Attendence</a>
+            <a href="{%url 'logout'%}"> Logout </a>
+        {%endif%}
+    </body>
+</html> 
+-->
+
+
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>
+      Centaralised Attendence System
+    </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@900&family=Open+Sans:ital,wght@1,300;1,800&family=PT+Sans:ital,wght@1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/index.css">
+  </head>
+  <body>
+    <!-- Image and text -->
+    <nav class="navbar navbar-light">
+
+        <a class="navbar-brand" href="">
+          <img src="https://image.flaticon.com/icons/svg/2534/2534714.svg" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+          Centralised Attendence System
+        </a>
+      </center>
+    </nav>
+    <div class="jumbotron">
+    <center>
+      <h1 class="display-4" id="check" onload="typeWriter()">Centerlised Attendence System</h1>
+      <p class="lead">Hello Everyone! This is centarlised attendence system. That is based on both GPS based as well as Voice based attendence system</p>
+      <hr class="my-4">
+      <p>This portal is designed for both android and non android user. So, what are you waiting for lets get started</p>
+      <a class="btn btn-primary btn-lg" href="{%url 'register'%}" role="button">Register</a>
+    </center>
+    </div>
+    <hr>
+  <div class="jumbotron">
+    <center>
+      <h1 class="display-4">Already a member ?</h1>
+      <p class="lead">Hello, are you already our member?</p>
+      <hr class="my-4">
+      <p>To log yourself in then please the login button below. We will collect your location and mark you present</p>
+      <a class="btn btn-primary btn-lg" href="{%url 'login'%}" role="button">Login</a>
+    </center>
+</div>
+
+<div class="jumbotron">
+  <center>
+    <h1 class="display-4">Admin ?</h1>
+    <p class="lead">Hello Admin, wanna check the status of your employees</p>
+    <hr class="my-4">
+    <p>Click the button below to log yourself inn, and get the status</p>
+    <a class="btn btn-primary btn-lg" href="#" role="button">Admin Login</a>
+    <a class="btn btn-primary btn-lg" href="#" role="button">Admin Register</a>
+  </center>
+</div>
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <center>
+      <h5>Developed by <span class="badge badge-secondary">Emerging_Codes()</span></h5>
+      <p class="badge badge-light">Made with ❤️ in INDIA</p>
+    </center>
+    </div>
+</div>
+
+  </body>
+</html>

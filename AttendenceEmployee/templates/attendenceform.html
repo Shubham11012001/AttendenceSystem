@@ -1,0 +1,186 @@
+<!--
+    <html>
+    <head>
+        <title>
+            Attendence Form
+        </title>
+    </head>
+    <body>
+        <form method="POST">
+            {%csrf_token%}
+            <input type="date" name="date" id="date">
+            <input type="time" name="time" id="time">
+            <input type="text" name="ip" id ="ip">
+            <input type="text" name="latitude" id="latitude">
+            <input type="text" name="longitude" id="longitude"> 
+            <input type="submit" name="Submit">
+        </form>
+    </body>
+</html>
+-->
+{%load static%}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>
+      Centaralised Attendence System
+    </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@900&family=Open+Sans:ital,wght@1,300;1,800&family=PT+Sans:ital,wght@1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{static 'index.css'}">
+
+    <script type="text/javascript">
+    //for getting user coordinates
+    window.onload = function () {
+             var script = document.createElement("script");
+             script.type = "text/javascript";
+             script.src = "https://api.ipify.org?format=jsonp&callback=DisplayIP";
+             document.getElementsByTagName("head")[0].appendChild(script);
+         };
+         function DisplayIP(response) {
+             document.getElementById("Ip").value = response.ip;
+             //document.getElementById("longitude").value = response.ip;
+         }
+
+    //for getting current date
+    function timeNow(i) {
+      var d = new Date(),
+      h = (d.getHours()<10?'0':'') + d.getHours(),
+      m = (d.getMinutes()<10?'0':'') + d.getMinutes();
+      i.value = h + ':' + m;
+    }
+
+  function showDate(i){
+    let today = new Date().toISOString().slice(0, 10)
+    i.value = today;
+  }
+    </script>
+<script type="text/javascript">
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.watchPosition(showPosition);
+  } else {
+    x.innerHTML = "Geolocation is not supported by this browser.";
+  }
+}
+function showPosition(position) {
+    document.getElementById("latitude").value= position.coords.latitude;
+    document.getElementById("longitude").value=position.coords.longitude;
+}
+
+getLocation()
+    </script>
+</script>
+  </head>
+
+  <body>
+    <!-- Image and text -->
+    <nav class="navbar navbar-light">
+        <a class="navbar-brand" href="">
+          <img src="https://image.flaticon.com/icons/svg/2534/2534714.svg" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+          Centralised Attendence System
+        </a>
+        <ul class="nav">
+  <li class="nav-item">
+    <a class="nav-link active" href="#">Attendece</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="status.html">Status</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="registeryourvoice.html">Register Your Voice</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{%url 'logout'%}">Logout</a>
+  </li>
+</ul>
+    </nav>
+
+<!--For user-->
+<div class="jumbotron">
+  <h1 class="display-4">Hello, UserName!</h1>
+  <p class="lead">We wish you Very Good morning from side of Department of .......</p>
+  <hr class="my-4">
+  <p>Please select any of two options below</p>
+  <p>If you want a call from our side to mark you present then Press CallME Button..!!!</p>
+  <p>If you are a smartphone user then fill the form and submit it</p>
+  <a class="btn btn-primary btn-lg" href="#" role="button">Call me..!!</a>
+</div>
+<hr>
+
+<!--Form for android users-->
+<div class="jumbotron">
+  <div class="container">
+    <form method="POST">
+        {%csrf_token%}
+      <div class="form-inline">
+        <div class="form-group">
+          <label for="timefield">Time</label>
+          <input type="time" name="time" id="timefield" class="form-control mx-sm-3">
+          <button type="button" onclick="timeNow(timefield)"  name="button">
+            <small id="timefield" class="text-muted">
+              get time
+            </small>
+          </button>
+        </div>
+        <hr>
+        <div class="form-group">
+          <label for="datefield">Date</label>
+          <input type="date" name='date' id="datefield" class="form-control mx-sm-3">
+          <button onclick="showDate(datefield)">
+            <small id="date" class="text-muted">
+              get date
+            </small>
+          </button>
+        </div>
+        <hr>
+      </div>
+      <hr>
+      <div class="form-inline">
+        <div class="form-group">
+          <label for="IP">Internet Protocol</label>
+          <input type="Ip" name="ip" id="Ip" class="form-control mx-sm-3" aria-describedby="IPHelpInline">
+          <small id="Ip" class="text-muted">
+            Autodetected
+          </small>
+        </div>
+        <hr>
+      </div>
+      <hr>
+      <div class="form-inline">
+        <div class="form-group">
+          <label for="latitude">Latitude</label>
+          <input type="lat" name="latitude" id="latitude" class="form-control mx-sm-3" aria-describedby="latHelpInline">
+          <small id="latitude" class="text-muted">
+            Autodetected
+          </small>
+        </div>
+        <hr>
+        <div class="form-group">
+          <label for="longitude">Longitude</label>
+          <input type="lon" name="longitude" id="longitude" class="form-control mx-sm-3" aria-describedby="lonHelpInline">
+          <small class="text-muted">
+            Autodetected
+          </small>
+        </div>
+      </div>
+      <hr>
+        <button type="submit" name="submit" class="btn btn-success">Mark Me Present</button>
+    </form>
+  </div>
+</div>
+<hr>
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <center>
+      <h5>Developed by <span class="badge badge-secondary">Emerging_Codes()</span></h5>
+      <p class="badge badge-light">Made with ❤️ in INDIA</p>
+    </center>
+    </div>
+</div>
+  </body>
+</html>

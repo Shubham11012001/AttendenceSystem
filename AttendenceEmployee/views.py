@@ -78,7 +78,7 @@ def registerView(request):
                 details.userIp = user_ip
                 details.userDepartment = user_department
                 details.userPassword = user_password
-                details.userPrivcayKey = userPrivacyKey
+                details.userPrivacyKey = userPrivacyKey
                 details.save()
                 totalAttendence = TotalAttendence()
                 totalAttendence.user = user

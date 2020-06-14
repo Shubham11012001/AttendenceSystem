@@ -91,7 +91,7 @@ def registerView(request):
             except:
                 a = User.objects.get(username = user_name)
                 a.delete()
-                return messages.success(request,"Sorry User there is an error form our end")
+                return HttpResponse("<h1>There is a internal server error</h1>")
     else:
         form = UserDetailsForm
         return render(request,'registerForm.html',{'form':form})

@@ -1,0 +1,53 @@
+body {
+    margin-top: 3rem;
+    background: #0fbcf9;
+    height: 100%;
+    font-family: 'Bungee Inline', cursive;
+    margin: 2rem;
+  }
+  
+  body:hover {
+    background-color: #ffa502;
+  }
+  
+  .display-1 {
+    color: #1e272e;
+    /*font-family: 'Press Start 2P', cursive;*/
+  }
+  
+  .display-1:hover {
+    color: #9b59b6;
+    font-family: 'Freckle Face', cursive;
+  }
+  
+  .jumbotron {
+    background-color: #808e9b;
+  }
+  
+  .jumbotron:hover {
+    background-color: #dfe4ea;
+  }
+  
+  .btn {
+    background-color: #ff6348;
+  }
+  
+  .btn:hover {
+    background-color: #c0392b;
+  }
+  
+  .message_class{
+    color:#e74c3c;
+    font-family: 'Bangers', cursive;
+    
+  }
+  .messages{
+    color:black;
+    font-family: 'Bangers', cursive;
+    font-size: 3rem;
+  }
+  /*
+  font-family: 'Freckle Face', cursive;
+  font-family: 'Press Start 2P', cursive;
+  */
+  

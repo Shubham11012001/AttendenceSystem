@@ -1,0 +1,123 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>
+      Centaralised Attendence System
+    </title>
+    <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@900&family=Open+Sans:ital,wght@1,300;1,800&family=PT+Sans:ital,wght@1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{%static 'index.css'%}">
+  </head>
+  <body>
+    <nav class="navbar navbar-light">
+        <a class="navbar-brand" href="#">
+          <img src="https://image.flaticon.com/icons/svg/2534/2534714.svg" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
+          Centralised Attendence System
+        </a>
+        <ul class="nav">
+    <li class="nav-item">
+    <a class="nav-link active" href="#">Attendence</a>
+    </li>
+    <li class="nav-item">
+    <a class="nav-link" href="#">Status</a>
+    </li>
+    <li class="nav-item">
+    <a class="nav-link" href="#">Back</a>
+    </li>
+    <li class="nav-item">
+    <a class="nav-link" href="#">Logout</a>
+    </li>
+    </ul>
+    </nav>
+<!--Message for user help-->
+<div class="jumbotron">
+  <h1 class="display-4">Hello, {{model.userName}}</h1>
+  <p class="lead">We wish you Very Good morning from side of Department of {{models.userDepartment}}</p>
+  <hr class="my-4">
+  <p>For verifying you over the call we need you voice sample</p>
+  <p>For proper working of our system we need 15 samples of your voice.So, that we can identify you easily</p>
+  <p>You can upload your voice explicity or by tapping on the below button</p>
+  {%if messages%}
+    {%for message in messages%}
+    <p class="messages">
+        {{message}} 
+    </p>
+    {%endfor%}
+{%endif%}
+</div>
+<hr>
+<!--For recording sound or uploading it-->
+  <div class="card">
+    <div class="card-block">
+<center>
+  <h4 class="card-title">Get my voice from your website</h4>
+  <h5 class="card-text">You need to speak up loudly and clearly below mentioned phrases after clicking on 'Train Machine to identify me"</h5>
+  <p class="card-text">Hope You Understand..!</p>
+  <hr>
+  <a class="btn btn-primary" href="{%url 'recordingaudio'%}" role="button">Train Machine To identify me</a>
+</center>
+      </div>
+  </div>
+  <hr>
+  <div class="container">
+    <div class="card-columns d-flex justify-content-center">
+      <div class="row">
+        <div class="col-6">
+          <div class="card">
+            <div class="card-block">
+              <center>
+                <h4 class="card-title">We Request you to please speak up below things loud and clear</h4>
+                <h5 class="card-text">For Hindi People</h5>
+              </center>
+
+            <hr>
+              <p class="card-text" id="hindi">
+                मेरे देश का नाम भारत है। भारत को इंडिया तथा हिंदुस्तान नाम से भी जाना जाता है। मेरे देश की जनसंख्‍या लगभग 1 अरब 21 करोड़ है। यहां अनेक भाषाओं और बोलियों को बोलने वाले लोग निवास करते हैं।
+                मेरा देश धार्मिक विविधता वाला देश है। हिन्दू, सिख, बौद्ध, जैन, ईसाई, मुस्लिम आदि धर्मों को यहां एक समान दृष्टि से देखा जाता है। भारत एक धर्मनिरपेक्ष देश है।
+                भारत की सभ्यता और संस्कृति दुनिया भर में विख्‍यात है। इसी से अभिभूत होकर लाखों विदेशी नागरिक प्रतिवर्ष यहां घूमने के लिए आते हैं।
+                यहां अनेक संत और महात्माओं ने जन्म लिया है। राम, कृष्ण, बुद्ध, महावीर, कबीर, गांधी आदि महापुरुष हमारे आदर्श रहे हैं।              महान हिमालय से रक्षित तथा पवित्र गंगा से सिंचित हमारा भारत एक स्वतंत्र आत्मनिर्भर देश है।
+                मेरा देश लोकतंत्र में विश्वास रखता है। यहां सभी को उन्नति करने के समान अवसर प्राप्त हैं।
+              </p>
+            </div>
+          </div>
+        </div>
+          <div class="col-6">
+            <div class="card">
+              <div class="card-block">
+                <center>
+                  <h4 class="card-title">We Request you to please speak up below things loud and clear</h4>
+                  <h5 class="card-text">For English People</h5>
+                </center>
+
+              <hr>
+                <p class="card-text" id="hindi">
+                The name of my country is India. India is also known as India and Hindustan. My country has a population of about 1 billion 21 crores.
+                People who speak many languages ​​and dialects reside here.
+                Hindu, Sikh, Buddhist, Jain, Christian, Muslim etc. religions are seen here with a similar view. India is a secular country.
+                The civilization and culture of India is known worldwide. Overwhelmed by this, millions of foreign nationals come here every year to visit.
+                Many saints and mahatmas have taken birth here. Ram, Krishna, Buddha, Mahavira, Kabir, Gandhi etc. have been our ideals. Protected by the Great Himalayas and fed by the holy Ganges, our India is an independent self-sufficient country.
+                My country believes in democracy. Everyone has equal opportunities to progress here.
+                </p>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    </div>
+<hr>
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <center>
+      <h5>Developed by <span class="badge badge-secondary">Emerging_Codes()</span></h5>
+      <p class="badge badge-light">Made with ❤️ in INDIA</p>
+    </center>
+    </div>
+</div>
+  </body>
+</html>

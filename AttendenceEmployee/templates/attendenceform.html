@@ -31,7 +31,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@900&family=Open+Sans:ital,wght@1,300;1,800&family=PT+Sans:ital,wght@1,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{static 'index.css'}">
+    <link rel="stylesheet" href="{%static 'index.css'%}">
 
     <script type="text/javascript">
     //for getting user coordinates
@@ -86,13 +86,13 @@ getLocation()
         </a>
         <ul class="nav">
   <li class="nav-item">
-    <a class="nav-link active" href="#">Attendece</a>
+    <a class="nav-link active" href="#">Attendence</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="status.html">Status</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="registeryourvoice.html">Register Your Voice</a>
+    <a class="nav-link" href="{%url 'trainingpage'%}">Register Your Voice</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="{%url 'logout'%}">Logout</a>
@@ -102,13 +102,14 @@ getLocation()
 
 <!--For user-->
 <div class="jumbotron">
-  <h1 class="display-4">Hello, UserName!</h1>
-  <p class="lead">We wish you Very Good morning from side of Department of .......</p>
+  <h1 class="display-4">Hello, {{model.userName}}!</h1>
+  <p class="lead">We wish you Very Good morning from side of Department of {{model.userDepartment}}</p>
   <hr class="my-4">
   <p>Please select any of two options below</p>
   <p>If you want a call from our side to mark you present then Press CallME Button..!!!</p>
   <p>If you are a smartphone user then fill the form and submit it</p>
-  <a class="btn btn-primary btn-lg" href="#" role="button">Call me..!!</a>
+  <a class="btn btn-primary btn-lg" href="{%url 'callme'%}" role="button">Call me..!!</a>
+  <a class="btn btn-primary btn-lg" href="{%url 'testvoice'%}" role="button">Record my voice Up here..!!</a>
 </div>
 <hr>
 
@@ -143,7 +144,7 @@ getLocation()
       <div class="form-inline">
         <div class="form-group">
           <label for="IP">Internet Protocol</label>
-          <input type="Ip" name="ip" id="Ip" class="form-control mx-sm-3" aria-describedby="IPHelpInline">
+          <input type="Ip" name="ip" id="Ip" class="form-control mx-sm-3" aria-describedby="IPHelpInline" readonly>
           <small id="Ip" class="text-muted">
             Autodetected
           </small>
@@ -154,7 +155,7 @@ getLocation()
       <div class="form-inline">
         <div class="form-group">
           <label for="latitude">Latitude</label>
-          <input type="lat" name="latitude" id="latitude" class="form-control mx-sm-3" aria-describedby="latHelpInline">
+          <input type="lat" name="latitude" id="latitude" class="form-control mx-sm-3" aria-describedby="latHelpInline" readonly>
           <small id="latitude" class="text-muted">
             Autodetected
           </small>
@@ -162,7 +163,7 @@ getLocation()
         <hr>
         <div class="form-group">
           <label for="longitude">Longitude</label>
-          <input type="lon" name="longitude" id="longitude" class="form-control mx-sm-3" aria-describedby="lonHelpInline">
+          <input type="lon" name="longitude" id="longitude" class="form-control mx-sm-3" aria-describedby="lonHelpInline" readonly>
           <small class="text-muted">
             Autodetected
           </small>

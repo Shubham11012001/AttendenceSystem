@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from .models import UserDetails,Attendence , Department, TotalAttendence
 from .forms import UserDetailsForm,loginForm
 from django.contrib.auth.decorators import login_required
@@ -9,6 +9,13 @@ from django.contrib import messages
 from math import radians, cos, sin, asin, sqrt
 import random,time
 import string
+from userRecognition.featureExctrection import *
+from userRecognition.makedirtakeaudio import *
+from userRecognition.test import *
+from userRecognition.training import *
+from .call_me_twilio import *
+from datetime import date 
+
 
 #getting distance between two points
 def distance(lat1, lon1, lat2, lon2): 
@@ -25,7 +32,7 @@ def distance(lat1, lon1, lat2, lon2):
 	c = 2 * asin(sqrt(a)) 
 	# Radius of earth in kilometers. Use 3956 for miles 
 	r = 6371
-	# calculate the result 
+    # calculate the result 
 	return(c * r) 
 
 
@@ -78,7 +85,7 @@ def registerView(request):
                 details.userIp = user_ip
                 details.userDepartment = user_department
                 details.userPassword = user_password
-                details.userPrivcayKey = userPrivacyKey
+                details.userPrivacyKey = userPrivacyKey
                 details.save()
                 totalAttendence = TotalAttendence()
                 totalAttendence.user = user
@@ -109,14 +116,16 @@ def loginView(request):
             user = authenticate(username = username,password = password)
             if user is not None:
                 if user.is_active:
+                    print("Active")
                     login(request,user)
-                    return redirect('attendence/')
+                    return redirect('attendence')
                 else:
+                    print("Error")
                     messages.success(request,"Please check entered ID and Passwored, because something went wrong!!")
-                    return redirect('/login')
+                    return reverse('login')
         except:
             messages.success(request,"User not found")
-            return redirect('login/')
+            return redirect('login')
     else:
         form = loginForm
         return render(request,'login.html',{'form':form})
@@ -137,6 +146,8 @@ def markingAttendence(request):
         sec_models = TotalAttendence.objects.get(user = username)
         if 'Private_Key' in request.COOKIES:
             privateKey = request.COOKIES['Private_Key']
+        else:
+            privateKey = False
             print(privateKey)
         date = request.POST['date']
         time = request.POST['time']
@@ -182,31 +193,85 @@ def markingAttendence(request):
                     sec_models.countAttendence+=1
                     sec_models.save()
                     models.save()
-                    return HttpResponse("<center><h1>Marked Attended</h1></center>")
+                    messages.success(request,"Attendence Marked")
+                    return render(request,"Thankyou.html")
                 else:
-                    return HttpResponse("You are far away from your Departmental Location")
-                    #messages.success(request,"You are far away from your DEPARTMENTAL LOCATION")
-            elif privateKey == usermodel.userPrivacyKey:
-                if distance_number< 2:
-                    models.userDetails = usermodel
-                    models.dateField = date
-                    models.timeField = time
-                    models.wasPresent = True
-                    month =date.split("-")
-                    sec_models.month=month[1]
-                    sec_models.countAttendence+=1
-                    sec_models.save()
-                    models.save()
-                    return HttpResponse("Marked Attended")
-                else:
-                    return HttpResponse("You are far away from your Departmental Location")
-                    #messages.success(request,"You are far away from your DEPARTMENTAL LOCATION")
+                    #return HttpResponse("You are far away from your Departmental Location")
+                    messages.success(request,"You are far away from your DEPARTMENTAL LOCATION")
+                    return redirect("thankyou")
+            elif privateKey:
+            	if privateKey == usermodel.userPrivacyKey:
+                    if distance_number< 2:
+                        models.userDetails = usermodel
+                        models.dateField = date
+                        models.timeField = time
+                        models.wasPresent = True
+                        month =date.split("-")
+                        sec_models.month=month[1]
+                        sec_models.countAttendence+=1
+                        sec_models.save()
+                        models.save()
+                        #return HttpResponse("Marked Attended")
+                        messages.success(request,"Maked Arrendence")
+                        return redirect('thankyou')
+                    else:
+                        #return HttpResponse("You are far away from your Departmental Location")
+                        messages.success(request,"You are far away from your DEPARTMENTAL LOCATION")
+                        return redirect('thankyou')
             else:
-                return HttpResponse("Your IP have not matched and not Cookies are favourable")
-                #messages.success(request,"Your IP have not matched and Cache haven't matched")
+                #return HttpResponse("Your IP have not matched and not Cookies are favourable")
+                messages.success(request,"Your IP have not matched and Cache haven't matched")
+                return redirect('thankyou')
     else:
         form = Attendence
-    return render(request,'attendenceform.html',{'form':form})
+        model = UserDetails.objects.get(user = request.user)
+        return render(request,'attendenceform.html',{'form':form,'model':model})
+
+@login_required
+def training_view(request):
+    model = UserDetails.objects.get(user = request.user)
+    return render(request,"registeryourvoice.html",{'model':model})
 
 
+@login_required
+def train_model_for_voice(request):
+    try:
+        username = str(request.user)
+        print(username)
+        makeDirector(username)
+        for i in range(0,15):
+            recordaudio(username,i)
+        training_data(username)
+        messages.success(request,"We have recorded your voice. Thank you!!")
+        return render(request,'registeryourvoice.html')
+    except Exception:
+        messages.success(request,"We have faced an error while Training our machine. Please try again later")
+        return redirect('trainingpage')
+    
+def call_me(request):
+    calling_user()
+    return HttpResponse("<h1> Please Pick Up call <h1>")
 
+
+@login_required
+def testvoiceHere(request):
+    username = str(request.user)
+    usermodel = UserDetails.objects.get(user = User.objects.get(username= username))
+    models = Attendence()
+    datee = date.today()
+    curr_time = time.localtime() 
+    x= testing_recordaudio(username)
+    print(usermodel)
+    print(x)
+    if x == username:
+        models.userDetails = usermodel
+        models.wasPresent = True
+        models.save()
+        messages.success(request,"Attendence Marked")
+        return redirect('thankyou')
+    else:
+        messages.success(request,"Your voice have not matched")
+        return redirect('thankyou')
+
+def thankyou(request):
+    return render(request,"Thankyou.html")

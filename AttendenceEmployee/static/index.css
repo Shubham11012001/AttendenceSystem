@@ -5,6 +5,7 @@
   body{
     background-color:#dfe6e9;
     font-family: 'PT Sans', sans-serif;
+    margin: 1.5rem;
   }
   .btn{
     background-color: #2d3436;
@@ -20,4 +21,8 @@
   }
   table{
     background-color: #a29bfe;
+  }
+  #messages{
+    font-size: xx-large;
+    color: red;
   }

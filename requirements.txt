@@ -1,0 +1,7 @@
+Django
+twilio
+pyaudio
+scypy
+sklearn
+_pickle
+python_speech_features

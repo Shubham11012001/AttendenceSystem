@@ -17,9 +17,13 @@ Done:
 3. Templates
 
 Todo:
-1. Existing Database is just a shit need to re-design it
-2. Generate weekly monthly and daily reports
-3. Show user that we really care about them
+1. Existing Database is just a shit need to re-design it.
+2. Generate weekly monthly and daily reports.
+3. Show user that we really care about them.
+4. Exceptions to be handled correctly.
+5. Integration of Some beautiful user facing elements.
+6. Training speaker recognition system with more voices, so that it can differentiate better
+7. API for getting IP address is not working correctly
 
 
 Note: To those who fork or clone this repository. Please consider to redesign database as it is very badly designed. I also don't even understand WTF i did with it
@@ -27,3 +31,5 @@ I will keep updating it....
 
 
 Enjoy!!!
+
+

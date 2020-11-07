@@ -46,8 +46,8 @@ function showPosition(position) {
 
 getLocation()
   </script>
-  <script type="text/javascript">
-  window.onload = function () {
+  <!--<script type="text/javascript">
+function getIP() {
            var script = document.createElement("script");
            script.type = "text/javascript";
            script.src = "https://api.ipify.org?format=jsonp&callback=DisplayIP";
@@ -58,6 +58,23 @@ getLocation()
            //document.getElementById("longitude").value = response.ip;
        }
   </script>
+getIP()-->
+<script src=  "https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  
+    <script> 
+        /* Add "https://api.ipify.org?format=json" statement 
+           this will communicate with the ipify servers in 
+           order to retrieve the IP address $.getJSON will 
+           load JSON-encoded data from the server using a 
+           GET HTTP request */ 
+  
+        $.getJSON("https://api.ipify.org?format=json", 
+                                          function(data) { 
+  
+            // Setting text of element P with id gfg 
+            $("#Ip").html(data.ip); 
+        }) 
+    </script>
   </head>
   <body>
     <nav class="navbar navbar-light">

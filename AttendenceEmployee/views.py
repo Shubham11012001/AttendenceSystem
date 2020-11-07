@@ -140,68 +140,51 @@ def logoutView(request):
 
 @login_required
 def markingAttendence(request):
-    username = request.user
-    if request.method == "POST":
-        models =Attendence()
-        sec_models = TotalAttendence.objects.get(user = username)
-        if 'Private_Key' in request.COOKIES:
-            privateKey = request.COOKIES['Private_Key']
-        else:
-            privateKey = False
-            print(privateKey)
-        date = request.POST['date']
-        time = request.POST['time']
-        request_ip = request.POST['ip']
-        user_lat = request.POST['latitude']
-        user_lat = float(user_lat)
-        user_lon = request.POST['longitude']
-        user_lon = float(user_lon)
-        print(username,user_lat,user_lon,request_ip,time,date)
-        gettingUser = User(username = username)
-        usermodel = UserDetails.objects.get(user = User.objects.get(username = username))
-        print(usermodel.userPrivacyKey) 
-        department = usermodel.userDepartment
-        print(department)
-        departmentalmodel = Department.objects.get(departmentName = department)
-        departmentIp = departmentalmodel.departmental_ip
-        departmentLatitude = float(departmentalmodel.departmental_lat)
-        departmentLongitude = float(departmentalmodel.departmental_lon)
-        distance_number = distance(departmentLatitude,departmentLongitude,user_lat,user_lon)
-        print(distance_number)
-        print(type(distance_number))
-        print(int(distance_number))
-        if request_ip == departmentIp:
-            models.userDetails = usermodel
-            models.dateField = date
-            models.timeField = time
-            models.wasPresent = True
-            month =date.split("-")
-            sec_models.month=month[1]
-            sec_models.countAttendence+=1
-            sec_models.save()
-            models.save()
-            return HttpResponse("Marked Attended")
-        else:
-            if request_ip == usermodel.userIp:
-                if distance_number < 2:
-                    models.userDetails = usermodel
-                    models.dateField = date
-                    models.timeField = time
-                    models.wasPresent = True
-                    month =date.split("-")
-                    sec_models.month=month[1]
-                    sec_models.countAttendence+=1
-                    sec_models.save()
-                    models.save()
-                    messages.success(request,"Attendence Marked")
-                    return render(request,"Thankyou.html")
-                else:
-                    #return HttpResponse("You are far away from your Departmental Location")
-                    messages.success(request,"You are far away from your DEPARTMENTAL LOCATION")
-                    return redirect("thankyou")
-            elif privateKey:
-            	if privateKey == usermodel.userPrivacyKey:
-                    if distance_number< 2:
+    try:
+        username = request.user
+        if request.method == "POST":
+            models =Attendence()
+            sec_models = TotalAttendence.objects.get(user = username)
+            if 'Private_Key' in request.COOKIES:
+                privateKey = request.COOKIES['Private_Key']
+            else:
+                privateKey = False
+                print(privateKey)
+            date = request.POST['date']
+            time = request.POST['time']
+            request_ip = request.POST['ip']
+            user_lat = request.POST['latitude']
+            user_lat = float(user_lat)
+            user_lon = request.POST['longitude']
+            user_lon = float(user_lon)
+            print(username,user_lat,user_lon,request_ip,time,date)
+            gettingUser = User(username = username)
+            usermodel = UserDetails.objects.get(user = User.objects.get(username = username))
+            print(usermodel.userPrivacyKey) 
+            department = usermodel.userDepartment
+            print(department)
+            departmentalmodel = Department.objects.get(departmentName = department)
+            departmentIp = departmentalmodel.departmental_ip
+            departmentLatitude = float(departmentalmodel.departmental_lat)
+            departmentLongitude = float(departmentalmodel.departmental_lon)
+            distance_number = distance(departmentLatitude,departmentLongitude,user_lat,user_lon)
+            print(distance_number)
+            print(type(distance_number))
+            print(int(distance_number))
+            if request_ip == departmentIp:
+                models.userDetails = usermodel
+                models.dateField = date
+                models.timeField = time
+                models.wasPresent = True
+                month =date.split("-")
+                sec_models.month=month[1]
+                sec_models.countAttendence+=1
+                sec_models.save()
+                models.save()
+                return HttpResponse("Marked Attended")
+            else:
+                if request_ip == usermodel.userIp:
+                    if distance_number < 2:
                         models.userDetails = usermodel
                         models.dateField = date
                         models.timeField = time
@@ -211,21 +194,42 @@ def markingAttendence(request):
                         sec_models.countAttendence+=1
                         sec_models.save()
                         models.save()
-                        #return HttpResponse("Marked Attended")
-                        messages.success(request,"Maked Arrendence")
-                        return redirect('thankyou')
+                        messages.success(request,"Attendence Marked")
+                        return render(request,"Thankyou.html")
                     else:
                         #return HttpResponse("You are far away from your Departmental Location")
                         messages.success(request,"You are far away from your DEPARTMENTAL LOCATION")
-                        return redirect('thankyou')
-            else:
-                #return HttpResponse("Your IP have not matched and not Cookies are favourable")
-                messages.success(request,"Your IP have not matched and Cache haven't matched")
-                return redirect('thankyou')
-    else:
-        form = Attendence
-        model = UserDetails.objects.get(user = request.user)
-        return render(request,'attendenceform.html',{'form':form,'model':model})
+                        return redirect("thankyou")
+                elif privateKey:
+                    if privateKey == usermodel.userPrivacyKey:
+                        if distance_number< 2:
+                            models.userDetails = usermodel
+                            models.dateField = date
+                            models.timeField = time
+                            models.wasPresent = True
+                            month =date.split("-")
+                            sec_models.month=month[1]
+                            sec_models.countAttendence+=1
+                            sec_models.save()
+                            models.save()
+                            #return HttpResponse("Marked Attended")
+                            messages.success(request,"Maked Arrendence")
+                            return redirect('thankyou')
+                        else:
+                            #return HttpResponse("You are far away from your Departmental Location")
+                            messages.success(request,"You are far away from your DEPARTMENTAL LOCATION")
+                            return redirect('thankyou')
+                else:
+                    #return HttpResponse("Your IP have not matched and not Cookies are favourable")
+                    messages.success(request,"Your IP have not matched and Cache haven't matched")
+                    return redirect('thankyou')
+        else:
+            form = Attendence
+            model = UserDetails.objects.get(user = request.user)
+            return render(request,'attendenceform.html',{'form':form,'model':model})
+    except Exception:
+        messages.success(request,"Something went wrong")
+        return redirect('login')
 
 @login_required
 def training_view(request):
